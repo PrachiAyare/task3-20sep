@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Days Until Event</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="date"] {
+      padding: 12px;
+      font-size: 16px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      transition: border 0.3s ease;
+    }
+
+    input[type="date"]:focus {
+      outline: none;
+      border-color: #0078D4;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      background-color: #0078D4;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    #result {
+      margin-top: 25px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Days Until Your Event</h2>
+    <input type="date" id="eventDate">
+    <button onclick="findDays()">Find Days</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function findDays() {
+      const input = document.getElementById('eventDate').value;
+      const result = document.getElementById('result');
+
+      if (!input) {
+        result.textContent = "Please select a date.";
+        return;
+      }
+
+      const today = new Date();
+      const eventDate = new Date(input);
+
+      today.setHours(0, 0, 0, 0);
+      eventDate.setHours(0, 0, 0, 0);
+
+      const diffTime = eventDate - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays > 0) {
+        result.textContent = `${diffDays} day(s) remaining until ${input}`;
+      } else if (diffDays === 0) {
+        result.textContent = "Today is the event day!";
+      } else {
+        result.textContent = `The event was ${Math.abs(diffDays)} day(s) ago.`;
+      }
+    }
+  </script>
+</body>
+</html>
